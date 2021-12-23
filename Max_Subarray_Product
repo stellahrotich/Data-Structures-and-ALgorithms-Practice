@@ -1,0 +1,47 @@
+"""Maximum Product Subarray
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product."""
+
+# Returns the product of max product subarray.Naive Approach
+#Time Complexity: O(N2) Auxiliary Space: O(1)
+class Solution(object):
+    def maxSubarrayProduct(arr, n):
+        result = arr[0]
+        for i in range(n):
+            mul = arr[i]
+            for j in range(i + 1, n):
+                result = max(result, mul)
+                mul *= arr[j]
+            result = max(result, mul)
+        return result
+    # Driver code
+    arr = [ 1, -2, -3, 0, 7, -8, -2 ]
+    n = len(arr)
+    print("Maximum Sub array product is" , maxSubarrayProduct(arr, n))
+
+#DP
+#Time: O(n)
+#Auxiliary Space: O(1)
+class Solution:
+    def maxProduct(self, nums):
+        curMax, curMin = 1, 1
+        res = nums[0]
+        for n in nums:
+            vals = (n, n * curMax, n * curMin)
+            curMax, curMin = max(vals), min(vals)
+            res = max(res, curMax)
+        return res
+        # Driver code
+        nums = [1, -2, -3, 0, 7, -8, -2]
+        n = len(nums)
+        print("Maximum Sub array product is", maxSubarrayProduct(nums, n))
+
+#DP
+#Time: O(n)
+#Auxiliary Space: O(1)
+class Solution:
+    def maxProduct(self, nums):
+        maxi = mini = ans = nums[0]
+        for i in nums[1:]:
+            maxi, mini = max(i, i*maxi, i*mini), min(i, i*maxi, i*mini)
+            ans = max(ans, maxi)
+        return ans
